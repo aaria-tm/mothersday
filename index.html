@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Mother's Day, Mom</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Premium Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Typography */
+        .font-serif-title { font-family: 'Cinzel', serif; }
+        .font-script { font-family: 'Great Vibes', cursive; }
+        .font-sans-text { font-family: 'Montserrat', sans-serif; }
+
+        /* Animated Soft Gradient Background */
+        body {
+            background: linear-gradient(-45deg, #fdf2f8, #fce7f3, #f3e8ff, #fff1f2);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            overflow-x: hidden;
+            color: #4c1d95;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 3D Flip Card Magic */
+        .perspective-1000 { perspective: 1000px; }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1);
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        /* Hover Lift Effect */
+        .flip-card:not(.flipped):hover .flip-card-inner {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px -15px rgba(225, 29, 72, 0.3);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        .flip-card-front {
+            background-color: #fff;
+        }
+
+        /* Light Shimmer Effect on Front */
+        .flip-card-front::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            transition: 0.7s;
+            z-index: 20;
+        }
+        .flip-card:hover .flip-card-front::before {
+            left: 200%;
+        }
+
+        .flip-card-front::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 60%);
+        }
+
+        .flip-card-back {
+            transform: rotateY(180deg);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        /* Ambient Petals */
+        .petal {
+            position: fixed;
+            top: -10%;
+            opacity: 0.7;
+            animation: fall linear infinite;
+            z-index: 0;
+            pointer-events: none;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+        @keyframes fall {
+            0% { transform: translate(0, -50px) rotate(0deg) rotateX(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translate(150px, 100vh) rotate(360deg) rotateX(360deg); opacity: 0; }
+        }
+
+        /* Entrance Animations */
+        .fade-in-up {
+            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+            transform: translateY(40px);
+        }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Gold Gradient Text */
+        .text-gold {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+        @keyframes shine {
+            to { background-position: 200% center; }
+        }
+    </style>
+</head>
+<body class="min-h-screen font-sans-text flex flex-col items-center py-12 px-4 relative">
+
+    <!-- Audio Element (Looking for your local ekti-piano.mp3 file) -->
+    <audio id="bg-music" loop>
+        <source src="ekti-piano.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Music Control Button -->
+    <button id="music-btn" class="fixed top-6 right-6 z-50 bg-white/70 backdrop-blur-md border border-white/50 shadow-lg px-4 py-2 rounded-full text-sm font-medium text-gray-600 hover:text-rose-500 hover:bg-white transition-all flex items-center gap-2">
+        <svg id="music-icon" xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+        </svg>
+        <span>Play Music</span>
+    </button>
+
+    <!-- Ambient Petals (Generated by JS) -->
+    <div id="particles-container"></div>
+
+    <!-- Header -->
+    <header class="text-center z-10 mb-16 fade-in-up" style="animation-delay: 0.2s;">
+        <h3 class="font-script text-3xl md:text-5xl text-rose-500 mb-3 drop-shadow-sm">To the woman who grew our world</h3>
+        <h1 class="font-serif-title text-4xl md:text-6xl font-semibold text-gray-800 tracking-wide uppercase shadow-sm">A Garden of Memories</h1>
+        <div class="mt-6 inline-block bg-white/50 backdrop-blur-sm px-6 py-2 rounded-full border border-white/60 shadow-sm">
+            <p class="text-gray-600 tracking-[0.2em] text-xs md:text-sm font-medium">TAP THE FLOWERS TO REVEAL</p>
+        </div>
+    </header>
+
+    <!-- Interactive Card Grid -->
+    <main id="gallery-container" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8 max-w-7xl w-full z-10 pb-24">
+        <!-- Cards injected by JS -->
+    </main>
+
+    <!-- Final Cinematic Screen -->
+    <div id="final-screen" class="fixed inset-0 z-50 hidden items-center justify-center bg-white/90 backdrop-blur-lg transition-all duration-1000 opacity-0 px-4">
+        <div class="text-center max-w-4xl transform scale-95 transition-transform duration-1000" id="final-content">
+            <h1 class="font-script text-6xl md:text-8xl text-rose-600 mb-8 drop-shadow-md">Happy Mother's Day</h1>
+            
+            <p class="font-sans-text text-xl md:text-2xl text-gray-700 leading-relaxed font-light mb-12 px-6 max-w-3xl mx-auto">
+                आई म्हणजे मायेची सावली,
+<div>सुखात हसू, दुःखात साथ खरी.</div>
+<div>स्वतःसाठी काहीच न मागणारी,</div>
+आमच्यासाठी पूर्ण जगणारी
+            </p>
+            
+            <div class="mt-12 relative inline-block">
+                <div class="absolute -inset-4 bg-gradient-to-r from-rose-100 via-pink-100 to-rose-100 blur-xl opacity-50 rounded-full"></div>
+                <div class="relative">
+                    <p class="text-xs md:text-sm tracking-[0.4em] text-gray-500 mb-3 uppercase font-medium">With lots of love from,</p>
+                    <p class="font-script text-5xl md:text-7xl text-gold drop-shadow-sm">Aarya & Savi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- Music Controls ---
+        const musicBtn = document.getElementById('music-btn');
+        const bgMusic = document.getElementById('bg-music');
+        let isPlaying = false;
+
+        musicBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" /></svg>
+                    <span>Play Music</span>
+                `;
+            } else {
+                bgMusic.volume = 0.5; // Soft background volume
+                bgMusic.play().catch(e => {
+                    alert("Make sure you downloaded the 'ekti-piano.mp3' file and put it in the same folder as this file!");
+                });
+                musicBtn.innerHTML = `
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-rose-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    <span class="text-rose-500">Pause Music</span>
+                `;
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // --- Card Data (Updated for local 'images' folder) ---
+        const frontImages = [
+            'images/flower-1.jpg',
+            'images/flower-2.jpg', 
+            'images/flower-3.jpg', 
+            'images/flower-4.jpg', 
+            'images/flower-5.jpg'  
+        ];
+
+        const memoryData = [
+            { img: 'images/memory-1.jpg', title: 'सौंदर्य', text: 'सौंदर्याची आणि साधेपणाची ओळख.' },
+            { img: 'images/memory-2.jpg', title: 'सामर्थ्य', text: 'स्वतः दुःख सहन करूनही मुलांना खंबीर बनवणारी ताकद' },
+            { img: 'images/memory-3.jpg', title: 'प्रेम', text: 'कोणत्याही अपेक्षेशिवाय कायम साथ देणारं नातं. ❤️.' },
+            { img: 'images/memory-4.jpg', title: 'शहाणपण', text: 'प्रत्येक वळणावर योग्य मार्ग दाखवणारी शिकवण. 🌸' },
+            { img: 'images/memory-5.jpg', title: 'जिव्हाळा', text: 'आईच्या प्रत्येक स्पर्शात आणि शब्दांत जाणवणारं आपलेपण. 🤍' }
+        ];
+
+        const container = document.getElementById('gallery-container');
+        let flippedCount = 0;
+
+        // --- Render the 3D Cards ---
+        memoryData.forEach((data, index) => {
+            const cardWrap = document.createElement('div');
+            cardWrap.className = `perspective-1000 h-[26rem] w-full cursor-pointer fade-in-up`;
+            cardWrap.style.animationDelay = `${0.4 + (index * 0.15)}s`;
+
+            const card = document.createElement('div');
+            card.className = 'flip-card w-full h-full';
+
+            card.innerHTML = `
+                <div class="flip-card-inner">
+                    <!-- FRONT OF CARD -->
+                    <div class="flip-card-front bg-pink-50 flex items-center justify-center">
+                        <!-- Added object-cover and w-full h-full to handle whatever image sizes you use -->
+                        <img src="${frontImages[index]}" alt="Flower" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" onerror="this.src='https://images.unsplash.com/photo-1610338304495-20297076d299?q=80&w=600&auto=format&fit=crop'; this.onerror=null; console.log('Could not find ' + this.src);" />
+                        <div class="absolute bottom-8 left-0 w-full text-center z-10">
+                            <span class="font-serif-title text-white text-sm md:text-base tracking-[0.2em] border border-white/50 px-6 py-2 rounded-sm backdrop-blur-md bg-black/30 shadow-lg">REVEAL</span>
+                        </div>
+                    </div>
+                    
+                    <!-- BACK OF CARD -->
+                    <div class="flip-card-back">
+                        <div class="w-36 h-36 mb-6 rounded-full overflow-hidden border-4 border-white shadow-xl transform transition-transform duration-500 hover:scale-105 bg-gray-100 flex items-center justify-center">
+                            <img src="${data.img}" alt="Memory" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=400&auto=format&fit=crop'; this.onerror=null; console.log('Could not find ' + this.src);" />
+                        </div>
+                        <h4 class="font-script text-4xl text-rose-600 mb-3">${data.title}</h4>
+                        <p class="text-center text-gray-700 text-sm font-medium leading-relaxed px-2">${data.text}</p>
+                    </div>
+                </div>
+            `;
+
+            // Add Click Event
+            card.addEventListener('click', function() {
+                if (this.classList.contains('flipped')) return;
+                
+                this.classList.add('flipped');
+                flippedCount++;
+
+                if (flippedCount === memoryData.length) {
+                    setTimeout(showFinalScreen, 3000); // 3s delay before finale
+                }
+            });
+
+            cardWrap.appendChild(card);
+            container.appendChild(cardWrap);
+        });
+
+        // --- Final Screen Animation ---
+        function showFinalScreen() {
+            const finalScreen = document.getElementById('final-screen');
+            const finalContent = document.getElementById('final-content');
+            
+            finalScreen.classList.remove('hidden');
+            finalScreen.classList.add('flex');
+            
+            setTimeout(() => {
+                finalScreen.classList.remove('opacity-0');
+                finalScreen.classList.add('opacity-100');
+                finalContent.classList.remove('scale-95');
+                finalContent.classList.add('scale-100');
+            }, 50);
+        }
+
+        // --- Generate SVG Falling Petals ---
+        const particlesContainer = document.getElementById('particles-container');
+        
+        // Creating smooth, leaf-like shapes for petals
+        const createPetal = () => {
+            let petal = document.createElement('div');
+            petal.className = 'petal';
+            
+            // Randomize size, position, and animation timing
+            const size = Math.random() * 15 + 10; // 10px to 25px
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            petal.style.left = `${Math.random() * 100}vw`;
+            petal.style.animationDuration = `${Math.random() * 6 + 6}s`; // 6s to 12s
+            petal.style.animationDelay = `${Math.random() * 5}s`;
+            
+            // Shape it like a petal using border-radius magic
+            petal.style.borderRadius = '50% 0 50% 50%';
+            
+            // Colors: Soft pinks and whites for Champa/Rose feel
+            const colors = ['#fda4af', '#fecdd3', '#ffffff', '#fff1f2'];
+            petal.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            
+            particlesContainer.appendChild(petal);
+        };
+
+        for (let i = 0; i < 20; i++) {
+            createPetal();
+        }
+    </script>
+</body>
+</html>
